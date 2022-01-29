@@ -12,7 +12,7 @@
 #endif
 
 #ifndef BIN_NAME
-# define BIN_NAME "???"
+# define BIN_NAME UNKNOW
 #endif
 
 void *malloc(size_t size)
