@@ -22,5 +22,5 @@ You can test the program in a loop from zero to the defined limit or use it in "
   
   #### Here is an example to test malloc function failure in your compiled program 'test' after first call, until 20th call
   
-  ##### ./malloc_checker bin=./test limit=20 loop=true**
+  ##### ./malloc_checker bin=./test limit=20 loop=true
   
