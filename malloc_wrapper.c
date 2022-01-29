@@ -27,7 +27,7 @@ void *malloc(size_t size)
 		backtrace(called_func, 2);
 		calledby = backtrace_symbols(called_func, 2);
 		subprocess = false;
-		if (calledby[1] != NULL)
+		if (calledby[1] != NULL || start_counter == false)
 		{
 			if (strstr(calledby[1], "main") != NULL)
 				start_counter = true;
