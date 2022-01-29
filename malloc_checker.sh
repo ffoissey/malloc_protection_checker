@@ -40,6 +40,8 @@ do
 done
 
 START=${MALLOC_LIMIT}
+BIN_NAME=$(basename $(echo $BIN | cut -d ' ' -f 1))
+
 
 if [[ ${LOOP} == "true" ]] || [[ ${LOOP} == "1" ]]; then
 	START=0
@@ -48,7 +50,7 @@ fi
 for i in $(seq ${START} 1 ${MALLOC_LIMIT})
 do
 	echo ---- MALLOC_LIMIT = ${i} -----
-	${CC} -dynamiclib -D MALLOC_LIMIT=${i} -o ${LIB_NAME} malloc_wrapper.c
+	${CC} -dynamiclib -D BIN_NAME="\"${BIN_NAME}\"" -D MALLOC_LIMIT=${i} -o ${LIB_NAME} malloc_wrapper.c
 	DYLD_INSERT_LIBRARIES=$(pwd)/${LIB_NAME} DYLD_FORCE_FLAT_NAMESPACE=1 ${BIN} 1>/dev/null
 	if [ "$?" -gt "127" ]; then
 		echo -e "${RED}KO${NC}"

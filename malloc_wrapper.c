@@ -4,8 +4,15 @@
 #include <stdbool.h>
 #include <strings.h>
 
+#define MAIN "main"
+#define UNKNOW "???"
+
 #ifndef MALLOC_LIMIT
 # define MALLOC_LIMIT 1
+#endif
+
+#ifndef BIN_NAME
+# define BIN_NAME "???"
 #endif
 
 void *malloc(size_t size)
@@ -27,9 +34,11 @@ void *malloc(size_t size)
 		backtrace(called_func, 2);
 		calledby = backtrace_symbols(called_func, 2);
 		subprocess = false;
-		if (calledby[1] != NULL || start_counter == false)
+		if (calledby[1] != NULL && start_counter == false)
 		{
-			if (strstr(calledby[1], "main") != NULL)
+			if (strstr(calledby[1], BIN_NAME) != NULL ||
+				strstr(calledby[1], UNKNOW) != NULL ||
+				strstr(calledby[1], MAIN) != NULL)
 				start_counter = true;
 			else
 				return real_malloc(size);
