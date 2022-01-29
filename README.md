@@ -1,6 +1,7 @@
 # C Malloc Protection Checker
 
 First of all, if you wonder why it is important to protect your mallocs, I suggest this [medium article](https://medium.com/pvs-studio/why-it-is-important-to-check-what-the-malloc-function-returned-ba39f3d13a83)
+
 In this repo you will find a shell script and a malloc wrapper to check malloc protection in your programs.
 
 This script allows you to test your program by deliberately causing the malloc function to fail (i.e. by returning NULL) after a certain number of calls defined by the "limit" variable.
