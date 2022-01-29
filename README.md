@@ -24,3 +24,6 @@ You can test the program in a loop from zero to the defined limit or use it in "
   
   ##### ./malloc_checker bin=./test limit=20 loop=true
   
+  **Note that if you want to run your program with arguments: just enclose the whole thing in quotes like this:**
+  
+   ##### ./malloc_checker bin="./test ARG1 ARG2 ARG3" limit=20 loop=true
