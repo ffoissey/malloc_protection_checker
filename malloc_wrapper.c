@@ -56,11 +56,8 @@ void *malloc(size_t size)
 
 	if (real_malloc == NULL)
 		real_malloc = dlsym(RTLD_NEXT, MALLOC_FUNCTION_NAME);
-
 	if (backtrace_function_need_allocation == true)
-	{
 		return real_malloc(size);
-	}
 	if (backtrace_function_need_allocation == false)
 	{
 		backtrace_function_need_allocation = true;
@@ -72,9 +69,7 @@ void *malloc(size_t size)
 			if (has_the_program_started(calledby) == true)
 				start_counter = true;
 			else
-			{
 				return real_malloc(size);
-			}
 		}
 	}
 	++counter;
