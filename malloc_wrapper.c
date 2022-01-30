@@ -47,7 +47,7 @@ static bool has_the_program_started(char * const * const calledby)
 
 void *malloc(size_t size)
 {
-	static int counter = 0;
+	static unsigned int counter = 0;
 	static bool backtrace_function_need_allocation = false;
 	static bool start_counter = false;
 	static void *(*real_malloc)(size_t) = NULL;
