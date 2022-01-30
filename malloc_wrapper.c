@@ -2,7 +2,7 @@
 #include <dlfcn.h>
 #include <execinfo.h>
 #include <stdbool.h>
-#include <strings.h>
+#include <string.h>
 
 #define MAIN "main"
 #define UNKNOW "???"
@@ -20,14 +20,14 @@ void *malloc(size_t size)
 	static int i = 0;
 	static int subprocess = false;
 	static bool start_counter = false;
-	static void *(*real_malloc)(size_t);
+	static void *(*real_malloc)(size_t) = NULL;
 	void *called_func[2] = {NULL};
 	char **calledby;
 
-	if (subprocess == true)
-		return real_malloc(size);
 	if (real_malloc == NULL)
 		real_malloc = dlsym(RTLD_NEXT, "malloc");
+	if (subprocess == true)
+		return real_malloc(size);
 	if (subprocess == false)
 	{
 		subprocess = true;

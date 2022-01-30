@@ -7,7 +7,7 @@ In this repo you will find a shell script and a malloc wrapper to check malloc p
 This script allows you to test your program by deliberately causing the malloc function to fail (i.e. by returning NULL) after a certain number of calls defined by the "limit" variable.
 You can test the program in a loop from zero to the defined limit or use it in "oneshot" mode in order to fail at exactly the defined number of calls.
 
-:warning: **The program is currently adapted to an OSX system, some small adaptations are necessary for GNU/Linux System.**
+:warning: **If you are on a GNU/Linux system, you have to compile your project with Clang compiler, not gcc**
 
 ## Run:
 

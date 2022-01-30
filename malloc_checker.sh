@@ -4,7 +4,7 @@ MALLOC_LIMIT=1
 LOOP=0
 CC=clang
 BIN=
-LIB_NAME=malloc_wrapper.dylib
+LIB_NAME=libmalloc_wrapper
 SCRIPT_NAME=$0
 RETURN_VALUE=${SUCCESS}
 RED="\033[31m"
@@ -49,15 +49,24 @@ fi
 
 for i in $(seq ${START} 1 ${MALLOC_LIMIT})
 do
-	echo ---- MALLOC_LIMIT = ${i} -----
-	${CC} -dynamiclib -D BIN_NAME="\"${BIN_NAME}\"" -D MALLOC_LIMIT=${i} -o ${LIB_NAME} malloc_wrapper.c
-	DYLD_INSERT_LIBRARIES=$(pwd)/${LIB_NAME} DYLD_FORCE_FLAT_NAMESPACE=1 ${BIN} 1>/dev/null
+	if [[ "$OSTYPE" == "linux-gnu"* ]]; then
+		echo ---- MALLOC_LIMIT = ${i} -----
+		${CC} -ldl -shared -fPIC -D_GNU_SOURCE -D BIN_NAME="\"${BIN_NAME}\"" -D MALLOC_LIMIT=${i} -o ${LIB_NAME}.so malloc_wrapper.c
+		LD_PRELOAD=$(pwd)/${LIB_NAME}.so ${BIN} 1>/dev/null
+	elif [[ "$OSTYPE" == "darwin"* ]]; then
+		echo ---- MALLOC_LIMIT = ${i} -----
+		${CC} -dynamiclib -D BIN_NAME="\"${BIN_NAME}\"" -D MALLOC_LIMIT=${i} -o ${LIB_NAME}.dylib malloc_wrapper.c
+		DYLD_INSERT_LIBRARIES=$(pwd)/${LIB_NAME}.dylib DYLD_FORCE_FLAT_NAMESPACE=1 ${BIN} 1>/dev/null
+	else
+		echo -e "This program is not designed to run on this OS version: \"$OSTYPE\"" >&2
+		exit ${FAILURE}
+	fi
 	if [ "$?" -gt "127" ]; then
 		echo -e "${RED}KO${NC}"
 		RETURN_VALUE=${FAILURE}
 	else
 		echo -e "${GREEN}OK${NC}"
 	fi
-	rm -f ${LIB_NAME}
+	rm -f ${LIB_NAME}*
 done
 exit ${RETURN_VALUE}
