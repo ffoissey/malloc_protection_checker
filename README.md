@@ -7,7 +7,8 @@ In this repo you will find a shell script and a malloc wrapper to check malloc p
 This script allows you to test your program by deliberately causing the malloc function to fail (i.e. by returning NULL) after a certain number of calls defined by the "limit" variable.
 You can test the program in a loop from zero to the defined limit or use it in "oneshot" mode in order to fail at exactly the defined number of calls.
 
-:warning: **If you are on a GNU/Linux system, you have to compile your project with Clang compiler, not gcc**
+:warning: **If you are on a GNU/Linux system, you have to compile your project with CLANG compiler, not GCC compiler.**
+**Still for Linux, I advise you to compile your project with the ```-rdynamic``` CLANG flag in order to have the name of the calling function in the stacktrace and not just its address**
 
 ## Run:
 
@@ -15,7 +16,7 @@ You can test the program in a loop from zero to the defined limit or use it in "
 - Compile your program as usual, without changing anything.
 - Then, Run the script "malloc_checker.sh" with this usage:
 
-  ##### ./malloc_checker bin={your_compiled_program} limit={malloc_limit} [loop={false|true}]"
+  ##### ```./malloc_checker.sh bin={your_compiled_program} limit={malloc_limit} [loop={false|true}]"```
   
   #### Here is the possible arguments: 
   
@@ -25,8 +26,8 @@ You can test the program in a loop from zero to the defined limit or use it in "
   
   #### Here is an example to test malloc function failure in your compiled program 'test' after first call, until 20th call
   
-  ##### ./malloc_checker bin=./test limit=20 loop=true
+  ##### ```./malloc_checker.sh bin=./test limit=20 loop=true```
   
   **Note that if you want to run your program with arguments: just enclose the whole thing in quotes like this:**
   
-   ##### ./malloc_checker bin="./test ARG1 ARG2 ARG3" limit=20 loop=true
+   ##### ```./malloc_checker.sh bin="./test ARG1 ARG2 ARG3" limit=20 loop=true```
