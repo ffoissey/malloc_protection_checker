@@ -1,5 +1,7 @@
 #!/bin/bash
 
+SUCCESS=0
+FAILURE=1
 MALLOC_LIMIT=1
 LOOP=0
 CC=clang
@@ -10,8 +12,6 @@ RETURN_VALUE=${SUCCESS}
 RED="\033[31m"
 GREEN="\033[32m"
 NC="\033[0m"
-SUCCESS=0
-FAILURE=1
 
 USAGE="\nusage:\t${SCRIPT_NAME} bin={value} limit={value} [loop={value}]\n"
 HELP="option description:\n\tbin: binary you want to test\n\tlimit: the number of calls to malloc that can succeed before malloc returns NULL\n\tloop: [optional parameter] -> use if you want to loop from 0 to limit (default: false)"
