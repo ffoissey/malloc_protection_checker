@@ -39,6 +39,14 @@ do
 	fi
 done
 
+
+if [ -z "$BIN" ]; then
+	echo "You need to specify 'bin' option" >&2
+	echo -e $USAGE >&2
+	echo -e $HELP >&2
+	exit $FAILURE
+fi
+
 START=${MALLOC_LIMIT}
 BIN_NAME=$(basename $(echo $BIN | cut -d ' ' -f 1))
 
